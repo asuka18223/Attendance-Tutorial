@@ -1,8 +1,19 @@
 <% provide(:title, 'All Users') %>
 <h1>ユーザー一覧</h1>
+​
+<div class="row container">
+  <div class="pull-right">
+    <p>ユーザー名検索</p>
+    <%= form_tag(users_path, method: "get" ) do %>
+    <%= text_field_tag :name %>
+      <%= submit_tag "検索", class: "btn btn-primary"%>
+    <% end %>
+  </div>
+</div>
+  
+  
+  <div class="col-md-10 col-md-offset-1">
 
-<div class="col-md-10 col-md-offset-1">
-  <%= will_paginate %>
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
@@ -16,7 +27,7 @@
       </tr>
     </thead>
 
-    <% @users.each do |user| %>
+    <ul><% @users.each do |user| %>
       <tr>
         <td>
           <% if current_user.admin? %>
@@ -30,6 +41,7 @@
           <td class="center"><%= format_basic_info(user.basic_time) %></td>
           <td class="center"><%= format_basic_info(user.work_time) %></td>
         <% end %>
+    </ul>
         <td class="center">
           <% if current_user.admin? && !current_user?(user) %>
             <%= link_to "基本情報編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success" %>
@@ -40,7 +52,7 @@
       </tr>
     <% end %>
   </table>
-  <%= will_paginate %>
+
 </div>
 
 <!--モーダルウインドウ表示-->
