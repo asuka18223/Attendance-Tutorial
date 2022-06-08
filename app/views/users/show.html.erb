@@ -65,15 +65,17 @@
         <font color="RED">日</font>
         <% end %>
       </tb>
-    
+      <td><%= format_hour(day.started_at) if day.started_at.present? %></td>
+      <td><%= format_min(day.started_at) if day.started_at.present? %></td>
       
       <td>
         <% if btn_text = attendance_state(day) %>
           <%= link_to "#{btn_text}登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
         <% end %>
       </td>
-      <td><%= l(day.started_at, format: :time) if day.started_at.present? %></td>
-      <td><%= l(day.finished_at, format: :time) if day.finished_at.present? %></td>
+      <td><%= format_hour(day.started_at) if day.started_at.present? %></td>
+      <td><%= format_min(day.started_at) if day.started_at.present? %></td>
+      
       <td>
         <% if day.started_at.present? && day.finished_at.present? %>
           <%= str_times = working_times(day.started_at, day.finished_at) %>
