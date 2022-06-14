@@ -7,7 +7,6 @@
       <td>基本時間：<%= format_basic_info(@user.basic_time) %></td>
       <td>月初日：<%= l(@first_day, format: :short) %></td>
     </tr>
-
     <tr>
       <td>所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
       <td>名前：<%= @user.name %></td>
@@ -39,9 +38,9 @@
    <% @attendances.each do |day| %>
     <tr>
       <td><%= l(day.worked_on, format: :short) %></td>
+      
       <td>
  
-        
       <% if day.worked_on.wday == 1%>
         <font color="black">月</font>
         <% end %>
@@ -64,17 +63,18 @@
       <% if day.worked_on.wday == 0%>
         <font color="RED">日</font>
         <% end %>
-      </tb>
-      <td><%= format_hour(day.started_at) if day.started_at.present? %></td>
-      <td><%= format_min(day.started_at) if day.started_at.present? %></td>
-      
       <td>
         <% if btn_text = attendance_state(day) %>
           <%= link_to "#{btn_text}登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
         <% end %>
       </td>
-      <td><%= format_hour(day.started_at) if day.started_at.present? %></td>
-      <td><%= format_min(day.started_at) if day.started_at.present? %></td>
+
+   
+      <td><%= l(day.started_at, format: :time) if day.started_at.present? %></td>
+      <td><%= l(day.finished_at, format: :time) if day.finished_at.present? %></td> 
+      
+
+  
       
       <td>
         <% if day.started_at.present? && day.finished_at.present? %>
@@ -82,6 +82,7 @@
           <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
         <% end %>
       </td>
+
       <td><%= day.note %></td>
     </tr>
     <% end %>
